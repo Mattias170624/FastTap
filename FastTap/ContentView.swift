@@ -16,6 +16,16 @@ struct ContentView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     
+    init() {
+        if firebaseAuth.currentUser != nil {
+            print("Logged in!")
+            goToHomeScreen(userUID: firebaseAuth.currentUser!.uid)
+        } else {
+            print("No user logged in")
+        }
+    }
+    
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -33,6 +43,7 @@ struct ContentView: View {
                     
                     TextField("Email", text: $email)
                         .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 .padding(.horizontal)
                 .frame(width: 300.0, height: 50.0)
@@ -48,6 +59,7 @@ struct ContentView: View {
                     
                     SecureField("Password", text: $password)
                         .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 .padding(.horizontal)
                 .frame(width: 300.0, height: 50.0)
@@ -76,15 +88,18 @@ struct ContentView: View {
         } else {
             
             firebaseAuth.signIn(withEmail: email, password: password) { (result, error) in
-                if result == nil {
-                    print("Failed to login")
-                    // show message on what failed
-                } else {
-                    print("Sucess loggin in")
-                    // transfer over to mainscreen
+                guard (result?.user) != nil else {
+                    print("Error logging in")
+                    return
                 }
+                goToHomeScreen(userUID: firebaseAuth.currentUser!.uid)
             }
         }
+    }
+    
+    func goToHomeScreen(userUID: String) {
+        print("Home screen")
+        
     }
 }
 
@@ -118,7 +133,7 @@ struct RegisterView: View {
                 
                 TextField("Nickname", text: $nickname)
                     .disableAutocorrection(true)
-                
+                    .textInputAutocapitalization(.never)
             }
             .padding(.horizontal)
             .frame(width: 300.0, height: 50.0)
@@ -134,6 +149,7 @@ struct RegisterView: View {
                 
                 TextField("Email", text: $email)
                     .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
             }
             .padding(.horizontal)
             .frame(width: 300.0, height: 50.0)
@@ -149,6 +165,7 @@ struct RegisterView: View {
                 
                 SecureField("Password", text: $password)
                     .disableAutocorrection(true)
+                    .textInputAutocapitalization(.never)
             }
             .padding(.horizontal)
             .frame(width: 300.0, height: 50.0)
@@ -204,13 +221,34 @@ struct RegisterView: View {
             print("Fill in all fields")
         } else {
             firebaseAuth.createUser(withEmail: email, password: password) { (result, error) in
-                if result == nil {
-                    print("Failed to create an account")
-                } else {
-                    print("Sucess creating an account")
+                guard (result?.user) != nil else {
+                    print("Error: \(error!.localizedDescription)")
+                    return
                 }
+                
+                addDataToDatabase(userUID: firebaseAuth.currentUser!.uid)
             }
         }
+    }
+    
+    func addDataToDatabase(userUID: String) {
+        let userData = [
+            "uid" : firebaseAuth.currentUser!.uid,
+            "email" : email,
+            "nickname" : nickname]
+        
+        db.collection("users").document(userUID).setData(userData) { error in
+            guard error == nil else {
+                print("Error: \(error!.localizedDescription)")
+                return
+            }
+            continueToHomeScreen(userUID: userUID)
+        }
+    }
+    
+    func continueToHomeScreen(userUID: String) {
+        print("Home screen")
+        
     }
 }
 
