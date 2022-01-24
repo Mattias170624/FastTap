@@ -17,7 +17,7 @@ class Database {
     func fetchUserInformation(userUID: String, completion: @escaping((Bool) -> ())) {
         self.db.collection("users").document(userUID).getDocument { document, error in
             guard document?.data() != nil else {
-                print("Error fetching document: \(error!.localizedDescription)")
+                print("Error: \(error?.localizedDescription ?? "Fetch document")")
                 return
             }
             let playerData = document!.data()
@@ -43,7 +43,7 @@ class Database {
     func addFirestoreUserData(email: String, password: String, nickname: String, completion: @escaping((Bool) -> ())) {
         auth.createUser(withEmail: email, password: password) { (result, error) in
             guard (result?.user) != nil else {
-                print("Error registering: \(error!.localizedDescription)")
+                print("Error: \(error?.localizedDescription ?? "Regestering")")
                 return
             }
             
@@ -62,7 +62,7 @@ class Database {
     func loginUserToFirestore(email: String, password: String, completion: @escaping((Bool) -> ())) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             guard (result?.user) != nil else {
-                print("Error logging in: \(error!.localizedDescription)")
+                print("Error: \(error?.localizedDescription ?? "Logging in")")
                 return
             }
             
