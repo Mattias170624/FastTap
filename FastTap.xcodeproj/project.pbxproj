@@ -20,6 +20,9 @@
 		CD676DA62794987300A93D7F /* FirebaseDatabaseSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA52794987300A93D7F /* FirebaseDatabaseSwift-Beta */; };
 		CD676DA82794987300A93D7F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA72794987300A93D7F /* FirebaseFirestore */; };
 		CD676DAA2794987300A93D7F /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA92794987300A93D7F /* FirebaseFirestoreSwift-Beta */; };
+		CD976A00279AD01E008D64A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9769FF279AD01E008D64A9 /* Database.swift */; };
+		CD976A02279AD122008D64A9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A01279AD122008D64A9 /* Player.swift */; };
+		CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A07279EF5DB008D64A9 /* Homescreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		CD676D8D2794570900A93D7F /* FastTapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapUITests.swift; sourceTree = "<group>"; };
 		CD676D8F2794570900A93D7F /* FastTapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CD676D9E2794969F00A93D7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CD9769FF279AD01E008D64A9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		CD976A01279AD122008D64A9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		CD976A07279EF5DB008D64A9 /* Homescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homescreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,9 +113,11 @@
 			isa = PBXGroup;
 			children = (
 				CD676D722794570600A93D7F /* FastTapApp.swift */,
-				CD676D742794570600A93D7F /* ContentView.swift */,
-				CD676D762794570800A93D7F /* Assets.xcassets */,
+				CD9769FB279AC915008D64A9 /* Model */,
+				CD9769FC279AC920008D64A9 /* View */,
+				CD9769FD279AC925008D64A9 /* Controller */,
 				CD676D9E2794969F00A93D7F /* GoogleService-Info.plist */,
+				CD676D762794570800A93D7F /* Assets.xcassets */,
 				CD676D782794570800A93D7F /* Preview Content */,
 			);
 			path = FastTap;
@@ -138,6 +146,31 @@
 				CD676D8F2794570900A93D7F /* FastTapUITestsLaunchTests.swift */,
 			);
 			path = FastTapUITests;
+			sourceTree = "<group>";
+		};
+		CD9769FB279AC915008D64A9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CD976A01279AD122008D64A9 /* Player.swift */,
+				CD9769FF279AD01E008D64A9 /* Database.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CD9769FC279AC920008D64A9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CD676D742794570600A93D7F /* ContentView.swift */,
+				CD976A07279EF5DB008D64A9 /* Homescreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CD9769FD279AC925008D64A9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,8 +314,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD976A02279AD122008D64A9 /* Player.swift in Sources */,
+				CD976A00279AD01E008D64A9 /* Database.swift in Sources */,
 				CD676D752794570600A93D7F /* ContentView.swift in Sources */,
 				CD676D732794570600A93D7F /* FastTapApp.swift in Sources */,
+				CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

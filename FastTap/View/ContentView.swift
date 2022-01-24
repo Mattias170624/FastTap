@@ -15,21 +15,11 @@ struct ContentView: View {
     
     @State private var email: String = ""
     @State private var password: String = ""
-    
-    init() {
-        if firebaseAuth.currentUser != nil {
-            print("Logged in!")
-            goToHomeScreen(userUID: firebaseAuth.currentUser!.uid)
-        } else {
-            print("No user logged in")
-        }
-    }
-    
+    @State private var homeScreenShowing: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
-                
                 Text("Fast \n    Tap")
                     .fontWeight(.bold)
                     .font(.largeTitle)
@@ -63,14 +53,21 @@ struct ContentView: View {
                 }
                 .padding(.horizontal)
                 .frame(width: 300.0, height: 50.0)
-                .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray))
+                
                 NavigationLink(destination: RegisterView(), label: {
                     Text("Create an account here")
                 })
                 
                 Button(action: {
-                    loginButton()
+                    if email == "" || password == "" {
+                        print("Fill in email and password")
+                    } else {
+                        Database().loginUserToFirestore(email: email, password: password, completion: { Bool in
+                            print("Logged in with \(Player.nickname)")
+                            homeScreenShowing.toggle()
+                        })
+                    }
                 }, label: {
                     Text("Login")
                         .frame(width: 250, height: 50, alignment: .center)
@@ -78,30 +75,27 @@ struct ContentView: View {
                 })
                     .buttonStyle(.bordered)
                     .padding(.top, 75)
+                    .fullScreenCover(isPresented: $homeScreenShowing, content: {
+                        Homescreen()
+                    })
             }
         }
-    }
-    
-    private func loginButton() {
-        if email == "" && password == "" {
-            print("Fill in email and password")
-        } else {
-            
-            firebaseAuth.signIn(withEmail: email, password: password) { (result, error) in
-                guard (result?.user) != nil else {
-                    print("Error logging in")
-                    return
+        .onAppear(perform: {
+            if firebaseAuth.currentUser != nil {
+                Database().fetchUserInformation(userUID: firebaseAuth.currentUser!.uid) { Bool in
+                    homeScreenShowing.toggle()
                 }
-                goToHomeScreen(userUID: firebaseAuth.currentUser!.uid)
+            } else {
+                print("No user logged in")
             }
-        }
+        })
+        .fullScreenCover(isPresented: $homeScreenShowing, content: {
+            Homescreen()
+        })
     }
     
-    func goToHomeScreen(userUID: String) {
-        print("Home screen")
-        
-    }
 }
+
 
 
 
@@ -113,12 +107,12 @@ struct RegisterView: View {
     @State private var nickname: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
-    @State private var showingSheet: Bool = false
-    var agreedToTerms: Bool = false
+    @State private var termsOfServiceShowing: Bool = false
+    @State private var homeScreenShowing: Bool = false
+    private var agreedToTerms: Bool = false
     
     var body: some View {
         VStack {
-            
             Text("Fast \n    Tap")
                 .fontWeight(.bold)
                 .font(.largeTitle)
@@ -174,14 +168,14 @@ struct RegisterView: View {
             
             HStack {
                 Button(action: {
-                    showingSheet.toggle()
+                    termsOfServiceShowing.toggle()
                 }, label: {
                     Text("By creating an account you agree \n to the terms & conditions")
                         .font(.body)
                         .italic()
                 })
             }
-            .sheet(isPresented: $showingSheet, content: {
+            .sheet(isPresented: $termsOfServiceShowing, content: {
                 VStack {
                     Text("License Agreement")
                         .font(.title)
@@ -196,7 +190,7 @@ struct RegisterView: View {
                     Spacer()
                     
                     Button(action: {
-                        showingSheet.toggle()
+                        termsOfServiceShowing.toggle()
                     }, label: {
                         Text("Dismiss")
                     })
@@ -205,7 +199,11 @@ struct RegisterView: View {
             })
             
             Button(action: {
-                registerAccount()
+                if nickname == "" || email == "" || password == "" {
+                    print("Fill in all fields")
+                } else {
+                    registerAccount()
+                }
             }, label: {
                 Text("Register")
                     .frame(width: 250, height: 50, alignment: .center)
@@ -213,47 +211,23 @@ struct RegisterView: View {
             })
                 .buttonStyle(.bordered)
                 .padding(.top, 75)
+                .sheet(isPresented: $homeScreenShowing, content: {
+                    Homescreen()
+                })
         }
     }
     
     func registerAccount() {
-        if nickname == "" || email == "" || password == "" {
-            print("Fill in all fields")
-        } else {
-            firebaseAuth.createUser(withEmail: email, password: password) { (result, error) in
-                guard (result?.user) != nil else {
-                    print("Error: \(error!.localizedDescription)")
-                    return
-                }
-                
-                addDataToDatabase(userUID: firebaseAuth.currentUser!.uid)
+        Database().addFirestoreUserData(email: email, password: password, nickname: nickname) { Bool in
+            Database().fetchUserInformation(userUID: firebaseAuth.currentUser!.uid) { Bool in
+                homeScreenShowing.toggle()
             }
         }
     }
     
-    func addDataToDatabase(userUID: String) {
-        let userData = [
-            "uid" : firebaseAuth.currentUser!.uid,
-            "email" : email,
-            "nickname" : nickname]
-        
-        db.collection("users").document(userUID).setData(userData) { error in
-            guard error == nil else {
-                print("Error: \(error!.localizedDescription)")
-                return
-            }
-            continueToHomeScreen(userUID: userUID)
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
         }
-    }
-    
-    func continueToHomeScreen(userUID: String) {
-        print("Home screen")
-        
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
