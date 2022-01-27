@@ -211,7 +211,7 @@ struct RegisterView: View {
             })
                 .buttonStyle(.bordered)
                 .padding(.top, 75)
-                .sheet(isPresented: $homeScreenShowing, content: {
+                .fullScreenCover(isPresented: $homeScreenShowing, content: {
                     Homescreen()
                 })
         }
