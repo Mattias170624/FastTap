@@ -145,6 +145,9 @@ struct Homescreen: View {
                 .padding()
                 .background(Color(.systemGroupedBackground))
                 .cornerRadius(10)
+                .fullScreenCover(isPresented: $showingGameScreen, content: {
+                    Gamescreen(onlineMode: false)
+                })
                 
                 Spacer()
                     .frame(height: 25)
@@ -174,6 +177,9 @@ struct Homescreen: View {
                 .padding()
                 .background(Color(.systemGroupedBackground))
                 .cornerRadius(10)
+                .fullScreenCover(isPresented: $showingGameScreen, content: {
+                    Gamescreen(onlineMode: true)
+                })
                 
                 Spacer()
             }
