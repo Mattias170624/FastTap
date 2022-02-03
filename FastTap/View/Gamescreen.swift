@@ -14,13 +14,12 @@ struct Gamescreen: View {
     
     @State var newWidth: Int = 0
     @State var newHeight: Int = 0
-    @State var points: Int = 0
-    @State var gameHasStarted: Bool = false
+    @ObservedObject var game = Game()
     
     var body: some View {
         VStack {
             Button(action: {
-                points += 1
+                game.addGamePoints()
                 changePos()
             }, label: {
                 Image(systemName: "hexagon.fill")
@@ -28,7 +27,6 @@ struct Gamescreen: View {
                     .foregroundColor(Color(.systemOrange))
             })
                 .position(x: CGFloat(newWidth), y: CGFloat(newHeight))
-                .opacity(gameHasStarted ? 1 : 0)
             
             Spacer()
             
@@ -38,10 +36,19 @@ struct Gamescreen: View {
                         .padding(20)
                     
                     Spacer()
-                        .frame(width: 75)
+                    
+                    VStack {
+                        Image(systemName: "clock")
+                            .font(.system(size: 40))
+                        Text("\(game.timeLeft)")
+                            .foregroundColor(Color(.systemRed))
+                    }
+                    
+                    Spacer()
+                    
                     VStack {
                         Text("Points")
-                        Text("\(points)")
+                        Text("\(game.userPoints)")
                             .foregroundColor(Color.green)
                     }
                     .padding(20)
@@ -49,14 +56,14 @@ struct Gamescreen: View {
                 .background(Color.blue)
                 .cornerRadius(15)
                 .padding()
+                .font(.title3)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.mint)
         .onAppear(perform: {
-            //Todo: add a timer before game starts
             changePos()
-            gameHasStarted.toggle()
+            game.startGameClock()
         })
     }
     
