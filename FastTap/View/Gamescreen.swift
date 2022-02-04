@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct Gamescreen: View {
-    var onlineMode: Bool
     private let screenWidth = UIScreen.main.bounds.size.width
     private let screenHeight = UIScreen.main.bounds.size.height
     
@@ -53,17 +52,20 @@ struct Gamescreen: View {
                     }
                     .padding(20)
                 }
-                .background(Color.blue)
+                .background(Color.white)
                 .cornerRadius(15)
                 .padding()
                 .font(.title3)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.mint)
+        .background(Color.gray)
+        .fullScreenCover(isPresented: $game.gameTimeOver, content: {
+            Endscreen(points: game.userPoints)
+        })
         .onAppear(perform: {
-            changePos()
             game.startGameClock()
+            changePos()
         })
     }
     
@@ -75,6 +77,6 @@ struct Gamescreen: View {
 }
 struct Gamescreen_Previews: PreviewProvider {
     static var previews: some View {
-        Gamescreen(onlineMode: true)
+        Gamescreen()
     }
 }
