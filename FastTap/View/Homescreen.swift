@@ -129,6 +129,7 @@ struct Homescreen: View {
                 
                 VStack(spacing: 20) {
                     Button("Practice mode") {
+                        Game.practiceMode = true
                         showingGameScreen.toggle()
                     }
                     .padding()
@@ -151,6 +152,8 @@ struct Homescreen: View {
                 
                 VStack(spacing: 20) {
                     Button("Multiplayer mode") {
+                        //Check if player can play today before playing
+                        Game.practiceMode = false
                         showingGameScreen.toggle()
                     }
                     .padding()
@@ -177,6 +180,9 @@ struct Homescreen: View {
                 
                 Spacer()
             }
+            .fullScreenCover(isPresented: $showingGameScreen, content: {
+                Gamescreen()
+            })
             .tabItem {
                 Label("Play", systemImage: "play.circle")
             }
