@@ -17,7 +17,7 @@ struct FastTapApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Loginscreen()
         }
     }
 }
