@@ -45,7 +45,7 @@ struct Homescreen: View {
                                 .foregroundColor(Color(.systemRed))
                         })
                             .fullScreenCover(isPresented: $backToStartScreen, content: {
-                                ContentView()
+                                Loginscreen()
                             })
                     }
                 }

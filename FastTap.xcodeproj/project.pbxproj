@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CD676D732794570600A93D7F /* FastTapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D722794570600A93D7F /* FastTapApp.swift */; };
-		CD676D752794570600A93D7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D742794570600A93D7F /* ContentView.swift */; };
+		CD676D752794570600A93D7F /* Loginscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D742794570600A93D7F /* Loginscreen.swift */; };
 		CD676D772794570800A93D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD676D762794570800A93D7F /* Assets.xcassets */; };
 		CD676D7A2794570800A93D7F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD676D792794570800A93D7F /* Preview Assets.xcassets */; };
 		CD676D842794570800A93D7F /* FastTapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D832794570800A93D7F /* FastTapTests.swift */; };
@@ -23,6 +23,7 @@
 		CD976A00279AD01E008D64A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9769FF279AD01E008D64A9 /* Database.swift */; };
 		CD976A02279AD122008D64A9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A01279AD122008D64A9 /* Player.swift */; };
 		CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A07279EF5DB008D64A9 /* Homescreen.swift */; };
+		CDAFC57127AED04900E058F3 /* Registerscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAFC57027AED04900E058F3 /* Registerscreen.swift */; };
 		CDD03A4627A95DBA00404D15 /* Gamescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4527A95DBA00404D15 /* Gamescreen.swift */; };
 		CDD03A4827A9BA2200404D15 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4727A9BA2200404D15 /* Game.swift */; };
 		CDD03A4A27AC1ADC00404D15 /* Endscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4927AC1ADC00404D15 /* Endscreen.swift */; };
@@ -48,7 +49,7 @@
 /* Begin PBXFileReference section */
 		CD676D6F2794570600A93D7F /* FastTap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastTap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD676D722794570600A93D7F /* FastTapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapApp.swift; sourceTree = "<group>"; };
-		CD676D742794570600A93D7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CD676D742794570600A93D7F /* Loginscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loginscreen.swift; sourceTree = "<group>"; };
 		CD676D762794570800A93D7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD676D792794570800A93D7F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CD676D7F2794570800A93D7F /* FastTapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastTapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +61,7 @@
 		CD9769FF279AD01E008D64A9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		CD976A01279AD122008D64A9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		CD976A07279EF5DB008D64A9 /* Homescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homescreen.swift; sourceTree = "<group>"; };
+		CDAFC57027AED04900E058F3 /* Registerscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registerscreen.swift; sourceTree = "<group>"; };
 		CDD03A4527A95DBA00404D15 /* Gamescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamescreen.swift; sourceTree = "<group>"; };
 		CDD03A4727A9BA2200404D15 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		CDD03A4927AC1ADC00404D15 /* Endscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endscreen.swift; sourceTree = "<group>"; };
@@ -166,7 +168,8 @@
 		CD9769FC279AC920008D64A9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CD676D742794570600A93D7F /* ContentView.swift */,
+				CD676D742794570600A93D7F /* Loginscreen.swift */,
+				CDAFC57027AED04900E058F3 /* Registerscreen.swift */,
 				CD976A07279EF5DB008D64A9 /* Homescreen.swift */,
 				CDD03A4527A95DBA00404D15 /* Gamescreen.swift */,
 				CDD03A4927AC1ADC00404D15 /* Endscreen.swift */,
@@ -320,7 +323,8 @@
 				CDD03A4627A95DBA00404D15 /* Gamescreen.swift in Sources */,
 				CDD03A4827A9BA2200404D15 /* Game.swift in Sources */,
 				CD976A00279AD01E008D64A9 /* Database.swift in Sources */,
-				CD676D752794570600A93D7F /* ContentView.swift in Sources */,
+				CD676D752794570600A93D7F /* Loginscreen.swift in Sources */,
+				CDAFC57127AED04900E058F3 /* Registerscreen.swift in Sources */,
 				CD676D732794570600A93D7F /* FastTapApp.swift in Sources */,
 				CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */,
 			);
