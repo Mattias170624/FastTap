@@ -127,8 +127,8 @@ struct Registerscreen: View {
     }
     
     func registerAccount() {
-        Database().addFirestoreUserData(email: email, password: password, nickname: nickname) { Bool in
-            Database().fetchUserInformation(userUID: firebaseAuth.currentUser!.uid) { Bool in
+        Database().addFirestoreUserData(email: email, password: password, nickname: nickname) {
+            Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
                 homeScreenShowing.toggle()
             }
         }

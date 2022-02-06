@@ -12,9 +12,9 @@ import FirebaseAuth
 struct Homescreen: View {
     let firebaseAuth = Auth.auth()
     @State private var backToStartScreen: Bool = false
-    @State private var defaultTabView = 3
     @State private var showingGameScreen: Bool = false
     @State private var nicknameSearch: String = ""
+    @State private var defaultTabView = 3
     @State var darkTheme: Bool = false
     
     var body: some View {
@@ -36,6 +36,7 @@ struct Homescreen: View {
                         Button(action: {
                             do {
                                 try firebaseAuth.signOut()
+                                
                                 backToStartScreen.toggle()
                             } catch {
                                 print("Error signing out")
@@ -79,7 +80,7 @@ struct Homescreen: View {
                 Spacer()
                     .frame(height: 50)
                 
-                Text("Welcome back!\n\(Player.nickname)")
+                Text("Welcome back!\n\(Player.shared.nickname)")
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .frame(width: 200, height: 100)
@@ -105,7 +106,7 @@ struct Homescreen: View {
                     VStack {
                         Text("Online score")
                             .font(.title3)
-                        Text("\(Player.onlineScore)")
+                        Text("\(Player.shared.onlinescore)")
                             .foregroundColor(.green)
                             .font(.title2)
                             .bold()
