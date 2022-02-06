@@ -11,9 +11,9 @@ struct Gamescreen: View {
     private let screenWidth = UIScreen.main.bounds.size.width
     private let screenHeight = UIScreen.main.bounds.size.height
     
+    @ObservedObject var game = Game()
     @State var newWidth: Int = 0
     @State var newHeight: Int = 0
-    @ObservedObject var game = Game()
     
     var body: some View {
         VStack {
@@ -31,7 +31,7 @@ struct Gamescreen: View {
             
             ZStack {
                 HStack {
-                    Text("\(Player.nickname)")
+                    Text("\(Player.shared.nickname)")
                         .padding(20)
                     
                     Spacer()
@@ -61,7 +61,7 @@ struct Gamescreen: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray)
         .fullScreenCover(isPresented: $game.gameTimeOver, content: {
-            Endscreen(points: game.userPoints)
+            Endscreen()
         })
         .onAppear(perform: {
             game.startGameClock()

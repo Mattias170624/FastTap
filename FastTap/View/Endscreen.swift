@@ -6,22 +6,24 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
+import FirebaseFirestoreSwift
 
 struct Endscreen: View {
-    var points: Int
     @State private var backToHomeScreen: Bool = false
-    
+    let firebaseAuth = Auth.auth()
     
     var body: some View {
         VStack {
             Spacer()
             
             VStack {
-                Text("\(Player.nickname)")
+                Text("\(Player.shared.nickname)")
                 
                 Spacer()
                     .frame(height: 25)
-                Text("Score: \(points)")
+                Text("Score: \(Player.shared.onlinescore)")
             }
             .frame(width: 200, height: 100, alignment: .center)
             .padding()
@@ -47,16 +49,11 @@ struct Endscreen: View {
         .fullScreenCover(isPresented: $backToHomeScreen, content: {
             Homescreen()
         })
-        .onAppear(perform: {
-            //Todo:
-            //Check if highscore is higher than the one before, if true, display additional text
-        })
     }
-    
 }
 
 struct Endscreen_Previews: PreviewProvider {
     static var previews: some View {
-        Endscreen(points: 9)
+        Endscreen()
     }
 }

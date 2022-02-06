@@ -12,10 +12,10 @@ import FirebaseAuth
 struct Loginscreen: View {
     var db = Firestore.firestore()
     let firebaseAuth = Auth.auth()
-    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var homeScreenShowing: Bool = false
+    @ObservedObject var player = Player.shared
     
     var body: some View {
         NavigationView {
@@ -63,10 +63,11 @@ struct Loginscreen: View {
                     if email == "" || password == "" {
                         print("Fill in email and password")
                     } else {
-                        Database().loginUserToFirestore(email: email, password: password, completion: { Bool in
-                            print("Logged in with \(Player.nickname)")
-                            homeScreenShowing.toggle()
-                        })
+                        Database().loginUserToFirestore(email: email, password: password) {
+                            Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
+                                homeScreenShowing.toggle()
+                            }
+                        }
                     }
                 }, label: {
                     Text("Login")
@@ -82,7 +83,7 @@ struct Loginscreen: View {
         }
         .onAppear(perform: {
             if firebaseAuth.currentUser != nil {
-                Database().fetchUserInformation(userUID: firebaseAuth.currentUser!.uid) { Bool in
+                Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
                     homeScreenShowing.toggle()
                 }
             } else {
