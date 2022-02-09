@@ -20,7 +20,6 @@ class Database {
                 print("Error: \(error?.localizedDescription ?? "Logging in")")
                 return
             }
-            
             complete()
         }
     }
