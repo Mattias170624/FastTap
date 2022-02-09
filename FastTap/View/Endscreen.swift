@@ -12,18 +12,23 @@ import FirebaseFirestoreSwift
 
 struct Endscreen: View {
     @State private var backToHomeScreen: Bool = false
+    @State private var gameResultText: String = ""
     let firebaseAuth = Auth.auth()
-    
+    let points: Int
     var body: some View {
         VStack {
             Spacer()
             
             VStack {
-                Text("xx")
+                Text("\(Player.user.name)")
                 
                 Spacer()
                     .frame(height: 25)
-                Text("Score:xx")
+                Text("\(points)")
+                
+                Spacer()
+                    .frame(height: 25)
+                Text("\(gameResultText)")
             }
             .frame(width: 200, height: 100, alignment: .center)
             .padding()
@@ -34,7 +39,9 @@ struct Endscreen: View {
             Spacer()
             
             Button(action: {
-                backToHomeScreen.toggle()
+                Database().assignUserData {
+                    backToHomeScreen.toggle()
+                }
             }, label: {
                 Text("Homescreen")
             })
@@ -49,11 +56,20 @@ struct Endscreen: View {
         .fullScreenCover(isPresented: $backToHomeScreen, content: {
             Homescreen()
         })
+        .onAppear {
+            print("!Practicemode: \(Game.practiceMode.description)")
+            if points > Player.user.score {
+                gameResultText = "You set a new record!"
+                Database().updateDataAndAssignNewData(newData: ["onlineScore" : points])
+            } else {
+                gameResultText = "No new highscore..."
+            }
+        }
     }
 }
 
 struct Endscreen_Previews: PreviewProvider {
     static var previews: some View {
-        Endscreen()
+        Endscreen(points: 1)
     }
 }

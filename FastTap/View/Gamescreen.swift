@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct Gamescreen: View {
-    private let screenWidth = UIScreen.main.bounds.size.width
-    private let screenHeight = UIScreen.main.bounds.size.height
-    
     @ObservedObject var game = Game()
     @State var newWidth: Int = 0
     @State var newHeight: Int = 0
@@ -31,7 +28,7 @@ struct Gamescreen: View {
             
             ZStack {
                 HStack {
-                    Text("xx")
+                    Text("\(Player.user.name)")
                         .padding(20)
                     
                     Spacer()
@@ -47,7 +44,7 @@ struct Gamescreen: View {
                     
                     VStack {
                         Text("Points")
-                        Text("\(game.userPoints)")
+                        Text("\(game.points)")
                             .foregroundColor(Color.green)
                     }
                     .padding(20)
@@ -61,7 +58,7 @@ struct Gamescreen: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray)
         .fullScreenCover(isPresented: $game.gameTimeOver, content: {
-            Endscreen()
+            Endscreen(points: game.points)
         })
         .onAppear(perform: {
             game.startGameClock()
@@ -69,7 +66,10 @@ struct Gamescreen: View {
         })
     }
     
-    func changePos() {
+    private func changePos() {
+        let screenWidth = UIScreen.main.bounds.size.width
+        let screenHeight = UIScreen.main.bounds.size.height
+        
         newWidth = Int.random(in: 50..<(Int(screenWidth - 50)))
         newHeight = Int.random(in: 50..<(Int(screenHeight - 250)))
     }

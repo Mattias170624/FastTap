@@ -10,13 +10,13 @@ import SwiftUI
 
 class Game: ObservableObject {
     static var practiceMode: Bool = true
-    @Published var userPoints: Int = 0
+    @Published var points: Int = 0
     @Published var timeLeft: Int = 10
     @Published var gameTimeOver: Bool = false
     @State var timer: Timer? = nil
     
     func addGamePoints() {
-        userPoints += 1
+        points += 1
     }
     
     func startGameClock () {
@@ -25,5 +25,4 @@ class Game: ObservableObject {
             self.gameTimeOver = (self.timeLeft <= 0) ? true : false
         }
     }
-    
 }
