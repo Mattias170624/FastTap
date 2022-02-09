@@ -31,7 +31,7 @@ struct Gamescreen: View {
             
             ZStack {
                 HStack {
-                    Text("\(Player.shared.nickname)")
+                    Text("xx")
                         .padding(20)
                     
                     Spacer()

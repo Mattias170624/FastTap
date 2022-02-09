@@ -11,17 +11,16 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestoreSwift
 
-class Player: ObservableObject {
-    private var db = Firestore.firestore()
-    private var firebaseAuth = Auth.auth()
+class Player {
+    var name: String = ""
+    var score: Int = 0
+    var onlineGamesLeft: Int = 0
     
-    @Published var onlinescore: Int = 0
-    @Published var nickname: String = ""
-    @Published var email: String = ""
-    @Published var uid: String = ""
-    static let shared = Player()
+    static var user = Player()
     
+}
     
+    /*
     func listenToUserdata(uid: String, complete: @escaping () -> Void) {
         db.collection("users").document(uid).addSnapshotListener { (querysnapshot, error) in
             guard let documents = querysnapshot?.data() else {
@@ -47,4 +46,4 @@ class Player: ObservableObject {
             complete()
         }
     }
-}
+     */

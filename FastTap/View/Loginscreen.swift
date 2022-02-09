@@ -10,12 +10,11 @@ import Firebase
 import FirebaseAuth
 
 struct Loginscreen: View {
-    var db = Firestore.firestore()
-    let firebaseAuth = Auth.auth()
+    let auth = Auth.auth()
+    
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var homeScreenShowing: Bool = false
-    @ObservedObject var player = Player.shared
     
     var body: some View {
         NavigationView {
@@ -63,12 +62,11 @@ struct Loginscreen: View {
                     if email == "" || password == "" {
                         print("Fill in email and password")
                     } else {
-                        Database().loginUserToFirestore(email: email, password: password) {
-                            Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
-                                homeScreenShowing.toggle()
-                            }
+                        loginProcess(email: email, password: password) {
+                            homeScreenShowing.toggle()
                         }
                     }
+                    
                 }, label: {
                     Text("Login")
                         .frame(width: 250, height: 50, alignment: .center)
@@ -81,18 +79,25 @@ struct Loginscreen: View {
                     })
             }
         }
-        .onAppear(perform: {
-            if firebaseAuth.currentUser != nil {
-                Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
-                    homeScreenShowing.toggle()
-                }
-            } else {
-                print("No user logged in")
-            }
-        })
         .fullScreenCover(isPresented: $homeScreenShowing, content: {
             Homescreen()
         })
+        .onAppear {
+            if auth.currentUser != nil {
+                Database().assignUserData {
+                    print("!Auto logged user: \(Player.user.name) ")
+                    homeScreenShowing.toggle()
+                }
+            }
+        }
+    }
+    
+    func loginProcess(email: String, password: String, complete: @escaping() -> Void) {
+        Database().loginUserToFirestore(email: email, password: password) {
+            Database().assignUserData {
+                complete()
+            }
+        }
     }
 }
 
