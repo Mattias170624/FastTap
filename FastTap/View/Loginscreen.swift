@@ -63,6 +63,7 @@ struct Loginscreen: View {
                         print("Fill in email and password")
                     } else {
                         loginProcess(email: email, password: password) {
+                            print("!Logging in user: \(Player.user.name)")
                             homeScreenShowing.toggle()
                         }
                     }
