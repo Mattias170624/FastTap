@@ -10,16 +10,14 @@ import Firebase
 import FirebaseAuth
 
 struct Homescreen: View {
-    let firebaseAuth = Auth.auth()
-    @State private var backToStartScreen: Bool = false
-    @State private var showingGameScreen: Bool = false
+    @State private var loginScreenShowing: Bool = false
+    @State private var gameScreenShowing: Bool = false
     @State private var nicknameSearch: String = ""
-    @State private var defaultTabView = 3
+    @State private var selectedTabView = 3
     @State var darkTheme: Bool = false
     
     var body: some View {
-        TabView(selection: $defaultTabView) {
-            
+        TabView(selection: $selectedTabView) {
             VStack {
                 Text("Settings")
                     .font(.title2)
@@ -34,18 +32,14 @@ struct Homescreen: View {
                     
                     Section(header: Text("Profile")) {
                         Button(action: {
-                            do {
-                                try firebaseAuth.signOut()
-                                
-                                backToStartScreen.toggle()
-                            } catch {
-                                print("Error signing out")
+                            Database().logOutUser {
+                                loginScreenShowing.toggle()
                             }
                         }, label: {
                             Text("Sign out")
                                 .foregroundColor(Color(.systemRed))
                         })
-                            .fullScreenCover(isPresented: $backToStartScreen, content: {
+                            .fullScreenCover(isPresented: $loginScreenShowing, content: {
                                 Loginscreen()
                             })
                     }
@@ -80,7 +74,7 @@ struct Homescreen: View {
                 Spacer()
                     .frame(height: 50)
                 
-                Text("Welcome back!\n\(Player.shared.nickname)")
+                Text("Welcome back!\n\(Player.user.name)")
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .frame(width: 200, height: 100)
@@ -106,7 +100,7 @@ struct Homescreen: View {
                     VStack {
                         Text("Online score")
                             .font(.title3)
-                        Text("\(Player.shared.onlinescore)")
+                        Text("\(Player.user.score)")
                             .foregroundColor(.green)
                             .font(.title2)
                             .bold()
@@ -131,7 +125,7 @@ struct Homescreen: View {
                 VStack(spacing: 20) {
                     Button("Practice mode") {
                         Game.practiceMode = true
-                        showingGameScreen.toggle()
+                        gameScreenShowing.toggle()
                     }
                     .padding()
                     .font(.title3)
@@ -153,9 +147,10 @@ struct Homescreen: View {
                 
                 VStack(spacing: 20) {
                     Button("Multiplayer mode") {
-                        //Check if player can play today before playing
-                        Game.practiceMode = false
-                        showingGameScreen.toggle()
+                        if (Database().checkOnlineGamesLeft()) {
+                            Game.practiceMode = false
+                            gameScreenShowing.toggle()
+                        }
                     }
                     .padding()
                     .font(.title3)
@@ -171,7 +166,7 @@ struct Homescreen: View {
                     Text("Entries left today:")
                         .italic()
                     
-                    Text("X")
+                    Text("\(Player.user.onlineGamesLeft)")
                         .foregroundColor(Color(.systemRed))
                         .bold()
                 }
@@ -181,7 +176,7 @@ struct Homescreen: View {
                 
                 Spacer()
             }
-            .fullScreenCover(isPresented: $showingGameScreen, content: {
+            .fullScreenCover(isPresented: $gameScreenShowing, content: {
                 Gamescreen()
             })
             .tabItem {

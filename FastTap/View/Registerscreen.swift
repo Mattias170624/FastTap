@@ -10,15 +10,11 @@ import Firebase
 import FirebaseAuth
 
 struct Registerscreen: View {
-    var db = Firestore.firestore()
-    let firebaseAuth = Auth.auth()
-    
-    @State private var nickname: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
     @State private var termsOfServiceShowing: Bool = false
     @State private var homeScreenShowing: Bool = false
-    private var agreedToTerms: Bool = false
+    @State private var nickname: String = ""
+    @State private var password: String = ""
+    @State private var email: String = ""
     
     var body: some View {
         VStack {
@@ -109,9 +105,11 @@ struct Registerscreen: View {
             
             Button(action: {
                 if nickname == "" || email == "" || password == "" {
-                    print("Fill in all fields")
+                    print("!Fill in all fields")
                 } else {
-                    registerAccount()
+                    registerProcess(email: email, password: password, nickname: nickname) {
+                        homeScreenShowing.toggle()
+                    }
                 }
             }, label: {
                 Text("Register")
@@ -126,10 +124,10 @@ struct Registerscreen: View {
         }
     }
     
-    func registerAccount() {
-        Database().addFirestoreUserData(email: email, password: password, nickname: nickname) {
-            Player().listenToUserdata(uid: firebaseAuth.currentUser!.uid) {
-                homeScreenShowing.toggle()
+    func registerProcess(email: String, password: String, nickname: String, complete: @escaping() -> Void) {
+        Database().registerUser(email: email, password: password, nickname: nickname) {
+            Database().assignUserData {
+                complete()
             }
         }
     }

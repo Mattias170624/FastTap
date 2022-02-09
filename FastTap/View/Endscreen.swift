@@ -19,11 +19,11 @@ struct Endscreen: View {
             Spacer()
             
             VStack {
-                Text("\(Player.shared.nickname)")
+                Text("xx")
                 
                 Spacer()
                     .frame(height: 25)
-                Text("Score: \(Player.shared.onlinescore)")
+                Text("Score:xx")
             }
             .frame(width: 200, height: 100, alignment: .center)
             .padding()
