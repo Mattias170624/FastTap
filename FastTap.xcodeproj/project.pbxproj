@@ -24,6 +24,10 @@
 		CD976A02279AD122008D64A9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A01279AD122008D64A9 /* Player.swift */; };
 		CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A07279EF5DB008D64A9 /* Homescreen.swift */; };
 		CDAFC57127AED04900E058F3 /* Registerscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDAFC57027AED04900E058F3 /* Registerscreen.swift */; };
+		CDC0091F27B4490500D4928C /* Settingscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC0091E27B4490500D4928C /* Settingscreen.swift */; };
+		CDC0092127B44E7700D4928C /* Friendscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC0092027B44E7700D4928C /* Friendscreen.swift */; };
+		CDC0092327B44F1800D4928C /* Highscorescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC0092227B44F1800D4928C /* Highscorescreen.swift */; };
+		CDC0092527B4529200D4928C /* BeforeGamescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDC0092427B4529200D4928C /* BeforeGamescreen.swift */; };
 		CDD03A4627A95DBA00404D15 /* Gamescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4527A95DBA00404D15 /* Gamescreen.swift */; };
 		CDD03A4827A9BA2200404D15 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4727A9BA2200404D15 /* Game.swift */; };
 		CDD03A4A27AC1ADC00404D15 /* Endscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD03A4927AC1ADC00404D15 /* Endscreen.swift */; };
@@ -62,6 +66,10 @@
 		CD976A01279AD122008D64A9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		CD976A07279EF5DB008D64A9 /* Homescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homescreen.swift; sourceTree = "<group>"; };
 		CDAFC57027AED04900E058F3 /* Registerscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Registerscreen.swift; sourceTree = "<group>"; };
+		CDC0091E27B4490500D4928C /* Settingscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settingscreen.swift; sourceTree = "<group>"; };
+		CDC0092027B44E7700D4928C /* Friendscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friendscreen.swift; sourceTree = "<group>"; };
+		CDC0092227B44F1800D4928C /* Highscorescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Highscorescreen.swift; sourceTree = "<group>"; };
+		CDC0092427B4529200D4928C /* BeforeGamescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeGamescreen.swift; sourceTree = "<group>"; };
 		CDD03A4527A95DBA00404D15 /* Gamescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamescreen.swift; sourceTree = "<group>"; };
 		CDD03A4727A9BA2200404D15 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		CDD03A4927AC1ADC00404D15 /* Endscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endscreen.swift; sourceTree = "<group>"; };
@@ -171,8 +179,12 @@
 				CD676D742794570600A93D7F /* Loginscreen.swift */,
 				CDAFC57027AED04900E058F3 /* Registerscreen.swift */,
 				CD976A07279EF5DB008D64A9 /* Homescreen.swift */,
+				CDC0091E27B4490500D4928C /* Settingscreen.swift */,
 				CDD03A4527A95DBA00404D15 /* Gamescreen.swift */,
 				CDD03A4927AC1ADC00404D15 /* Endscreen.swift */,
+				CDC0092027B44E7700D4928C /* Friendscreen.swift */,
+				CDC0092227B44F1800D4928C /* Highscorescreen.swift */,
+				CDC0092427B4529200D4928C /* BeforeGamescreen.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -320,13 +332,17 @@
 			files = (
 				CD976A02279AD122008D64A9 /* Player.swift in Sources */,
 				CDD03A4A27AC1ADC00404D15 /* Endscreen.swift in Sources */,
+				CDC0091F27B4490500D4928C /* Settingscreen.swift in Sources */,
 				CDD03A4627A95DBA00404D15 /* Gamescreen.swift in Sources */,
 				CDD03A4827A9BA2200404D15 /* Game.swift in Sources */,
+				CDC0092127B44E7700D4928C /* Friendscreen.swift in Sources */,
 				CD976A00279AD01E008D64A9 /* Database.swift in Sources */,
 				CD676D752794570600A93D7F /* Loginscreen.swift in Sources */,
+				CDC0092327B44F1800D4928C /* Highscorescreen.swift in Sources */,
 				CDAFC57127AED04900E058F3 /* Registerscreen.swift in Sources */,
 				CD676D732794570600A93D7F /* FastTapApp.swift in Sources */,
 				CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */,
+				CDC0092527B4529200D4928C /* BeforeGamescreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
