@@ -12,8 +12,7 @@ import SwiftUI
 struct Friendscreen: View {
     @State private var selection = Set<UUID>()
     @State private var fetchedUserList: [FetchedUser] = []
-    @State private var fetchedFriendRequestList: [String] = []
-    @State private var friendRequestText = "Friend requests"
+    @State private var fetchedFriendRequestList: [FetchedUser] = []
     
     var body: some View {
         VStack {
@@ -57,13 +56,19 @@ struct Friendscreen: View {
                 .font(.title2)
                 .padding()
             List {
-                ForEach(fetchedFriendRequestList, id: \.self) { user in
+                ForEach(fetchedFriendRequestList) { user in
                     HStack {
-                        Text("\(user)")
+                        Text("Name: \(user.name)")
                         
                         Spacer()
                         
-                        
+                        Button(action: {
+                            Database().acceptFriendRequest(targetUid: user.uid) {
+                                print("!Accepted \(user.name)'s friend request")
+                            }
+                        }, label: {
+                            Image(systemName: "person.badge.plus")
+                        })
                     }
                 }
             }
@@ -73,8 +78,8 @@ struct Friendscreen: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
-            // BUG -> OnAppear triggers when user clicks on textField in loginscreen
-            // Hence auth.currentUser? will have nil
+            // BUG -> OnAppear triggers when user clicks on textField in loginscreen.
+            // auth.currentUser? will have nil, hence why guard is used here to prevent crash
             guard Database().auth.currentUser != nil else { return }
             
             Database().getAllUsers { allPlayersList in

@@ -20,6 +20,26 @@ class Database {
     let db = Firestore.firestore()
     let auth = Auth.auth()
     
+    // Accepts target friend request and adds both users to eachothers friendsList document
+    func acceptFriendRequest(targetUid: String, complete: @escaping() -> Void) {
+        // Assigns current user uid -> Target users friendslist
+        db.collection("users").document(targetUid).collection("friendsList").document(auth.currentUser!.uid).setData(["uid" : auth.currentUser!.uid]) { error in
+            if let error = error {
+                print("!Error: \(error.localizedDescription)")
+            } else {
+                
+                // Assigns Target uid -> Current users friendslist
+                self.db.collection("users").document(self.auth.currentUser!.uid).collection("friendsList").document(targetUid).setData(["uid" : targetUid]) { error in
+                    if let error = error {
+                        print("!Error: \(error.localizedDescription)")
+                    } else {
+                        complete()
+                    }
+                }
+            }
+        }
+    }
+    
     func sendFriendRequest(targetUid: String, complete: @escaping() -> Void) {
         let myInfo: [String : Any] = [
             "nickname" : Player.user.name,
@@ -28,31 +48,31 @@ class Database {
         
         db.collection("users").document(targetUid).collection("friendRequest").document(auth.currentUser!.uid).setData(myInfo) { error in
             if let error = error {
-                print("!Error: \(error)")
+                print("!Error: \(error.localizedDescription)")
             } else {
                 complete()
             }
         }
     }
     
-    // Returns all your pending friend requests in an array
-    func getAllFriendRequests(complete: @escaping([String]) -> ()) {
-        print("! 1")
+    // Returns all your pending friend requests in an array of type: [Fetcheduser]
+    func getAllFriendRequests(complete: @escaping([FetchedUser]) -> ()) {
         db.collection("users").document(auth.currentUser!.uid).collection("friendRequest").getDocuments { (querySnapshot, error) in
             guard querySnapshot?.documents.isEmpty == false else { return }
-            var userList = [String]()
-            print("! 2")
+            var userList = [FetchedUser]()
+            
             for friendRequest in querySnapshot!.documents {
-                print("! 3? atleast once")
                 let name = friendRequest.get("nickname") as! String
-                //let uid = friendRequest.get("uid") as! String
-                userList.append(name)
+                let uid = friendRequest.get("uid") as! String
+                
+                let user = FetchedUser.init(name: name, uid: uid)
+                userList.append(user)
             }
             complete(userList)
         }
     }
     
-    // Fetches all users nickname and uid that are registered in database
+    // Fetches all users nickname and uid that are registered in database in the form of: [Fetcheduser]
     func getAllUsers(complete: @escaping([FetchedUser]) -> ()) {
         db.collection("users").getDocuments { (querysnapshot, error) in
             if let error = error {
