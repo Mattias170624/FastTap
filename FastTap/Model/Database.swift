@@ -13,12 +13,41 @@ import FirebaseFirestoreSwift
 struct FetchedUser: Identifiable {
     let name: String
     let uid: String
+    let score: Int
     let id = UUID()
 }
+
 
 class Database {
     let db = Firestore.firestore()
     let auth = Auth.auth()
+    
+    
+    // Fetches all my friends UID for later use in retrieving data
+    func fetchAllFriendsUID(complete: @escaping([String]) -> ()) {
+        db.collection("users").document(auth.currentUser!.uid).collection("friendsList").getDocuments { (querySnapshot, error) in
+            guard querySnapshot?.documents.isEmpty == false else { return }
+            var friendList = [String]()
+            
+            for document in querySnapshot!.documents {
+                let uid = document.get("uid") as! String
+                friendList.append(uid)
+            }
+            complete(friendList)
+        }
+    }
+    
+    // Fetches my friends name and current highscore
+    func fetchFriendsNameAndScore(targetUid: String, complete: @escaping(FetchedUser) -> ()) {
+        db.collection("users").document(targetUid).getDocument { (document, error) in
+            guard document?.exists == true else { return }
+            
+            let name = document!.get("nickname") as! String
+            let score = document!.get("onlineScore") as! Int
+            let friend = FetchedUser(name: name, uid: targetUid, score: score)
+            complete(friend)
+        }
+    }
     
     // Accepts target friend request and adds both users to eachothers friendsList document
     func acceptFriendRequest(targetUid: String, complete: @escaping() -> Void) {
@@ -65,7 +94,7 @@ class Database {
                 let name = friendRequest.get("nickname") as! String
                 let uid = friendRequest.get("uid") as! String
                 
-                let user = FetchedUser.init(name: name, uid: uid)
+                let user = FetchedUser.init(name: name, uid: uid, score: 0)
                 userList.append(user)
             }
             complete(userList)
@@ -84,7 +113,7 @@ class Database {
                     let name = document.get("nickname") as! String
                     let uid = document.get("uid") as! String
                     
-                    let user = FetchedUser.init(name: name, uid: uid)
+                    let user = FetchedUser.init(name: name, uid: uid, score: 0)
                     userList.append(user)
                 }
                 complete(userList)

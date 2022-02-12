@@ -16,11 +16,6 @@ struct Friendscreen: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                print("!Content: \(fetchedFriendRequestList)")
-            }, label: {
-                Text("OOO")
-            })
             Text("All players")
                 .font(.title2)
                 .padding()
