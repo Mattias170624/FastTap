@@ -18,6 +18,7 @@ struct Highscorescreen: View {
             
             List {
                 ForEach(fetchedFriendsList) { friend in
+                    
                     HStack {
                         Text("\(friend.name)")
                         
@@ -40,9 +41,18 @@ struct Highscorescreen: View {
                 for uid in uidList {
                     Database().fetchFriendsNameAndScore(targetUid: uid) { friend in
                         fetchedFriendsList.append(friend)
+                        fetchedFriendsList.sort {
+                            $0.score > $1.score
+                        }
                     }
                 }
+                // Add current user to list
+                let user = FetchedUser(name: Player.user.name, uid: "", score: Player.user.score)
+                fetchedFriendsList.append(user)
             }
+        }
+        .onDisappear {
+            fetchedFriendsList.removeAll()
         }
     }
 }
