@@ -13,6 +13,7 @@ struct Friendscreen: View {
     @State private var selection = Set<UUID>()
     @State private var fetchedUserList: [FetchedUser] = []
     @State private var fetchedFriendRequestList: [FetchedUser] = []
+    @State private var showRequestAlert = false
     
     var body: some View {
         VStack {
@@ -33,6 +34,7 @@ struct Friendscreen: View {
                             .foregroundColor(Color(.systemGreen))
                         
                         Button(action: {
+                            showRequestAlert = true
                             Database().sendFriendRequest(targetUid: user.uid) {
                                 print("!Request sent to: \(user.name)")
                             }
@@ -42,6 +44,9 @@ struct Friendscreen: View {
                                 .font(.system(size: 25))
                         })
                     }
+                    .alert("Friend request sent!", isPresented: $showRequestAlert) {
+                        Button("Ok") { }
+                    }
                 }
             }
             
@@ -50,25 +55,35 @@ struct Friendscreen: View {
             Text(fetchedFriendRequestList.isEmpty ? "No friend requests" : "Active friend requests")
                 .font(.title2)
                 .padding()
+            
+            
             List {
-                ForEach(fetchedFriendRequestList) { user in
+                ForEach(Array(fetchedFriendRequestList.enumerated()), id: \.1.id) { (index, friend) in
                     HStack {
-                        Text("Name: \(user.name)")
+                        Text(friend.name)
                         
                         Spacer()
                         
                         Button(action: {
-                            Database().acceptFriendRequest(targetUid: user.uid) {
-                                print("!Accepted \(user.name)'s friend request")
+                            // Accepts friend request from friend, then removes them from pending friend requests list
+                            Database().acceptFriendRequest(targetUid: friend.uid) {
+                                Database().removeFriendRequest(targetUid: friend.uid) {
+                                    self.fetchedFriendRequestList.remove(at: index)
+                                }
                             }
                         }, label: {
-                            Image(systemName: "person.badge.plus")
+                            Text("Accept")
                         })
+                    }
+                    .padding()
+                }
+                .onDelete{ index in
+                    Database().removeFriendRequest(targetUid: self.fetchedFriendRequestList[index.first!].uid) {
+                        self.fetchedFriendRequestList.remove(at: index.first!)
                     }
                 }
             }
             
-            Spacer()
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

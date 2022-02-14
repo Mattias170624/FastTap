@@ -23,6 +23,16 @@ class Database {
     let auth = Auth.auth()
     
     
+    func removeFriendRequest(targetUid: String, complete: @escaping() -> Void) {
+        db.collection("users").document(auth.currentUser!.uid).collection("friendRequest").document(targetUid).delete { (error) in
+            if let error = error {
+                print("!Error: \(error.localizedDescription)")
+            } else {
+                complete()
+            }
+        }
+    }
+    
     // Fetches all my friends UID for later use in retrieving data
     func fetchAllFriendsUID(complete: @escaping([String]) -> ()) {
         db.collection("users").document(auth.currentUser!.uid).collection("friendsList").getDocuments { (querySnapshot, error) in

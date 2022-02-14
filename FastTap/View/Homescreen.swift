@@ -10,24 +10,9 @@ import Firebase
 import FirebaseAuth
 
 struct Homescreen: View {
-    @State private var selectedTabView = 3
-    
-    init() {
-        UITabBar.appearance().barTintColor = UIColor(Color(.systemOrange))
-    }
     
     var body: some View {
-        TabView(selection: $selectedTabView) {
-            
-            Settingscreen()
-                .tabItem {
-                    Label("Settings", systemImage: "gearshape")
-                }
-            
-            Highscorescreen()
-                .tabItem {
-                    Label("Score", systemImage: "list.bullet")
-                }
+        TabView() {
             
             VStack {
                 Text("Fast \n    Tap")
@@ -76,7 +61,12 @@ struct Homescreen: View {
             .tabItem {
                 Label("Home", systemImage: "house")
             }
-            .tag(3)
+            
+            
+            Highscorescreen()
+                .tabItem {
+                    Label("Score", systemImage: "list.bullet")
+                }
             
             BeforeGamescreen()
                 .tabItem {
@@ -86,6 +76,11 @@ struct Homescreen: View {
             Friendscreen()
                 .tabItem {
                     Label("Friends", systemImage: "person.crop.circle.badge.plus")
+                }
+            
+            Settingscreen()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape")
                 }
         }
     }
