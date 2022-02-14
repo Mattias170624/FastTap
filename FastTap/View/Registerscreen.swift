@@ -88,7 +88,7 @@ struct Registerscreen: View {
                     
                     Spacer()
                     
-                    Text("1: Everyone can add you to their friendlist \nwhen you create an account")
+                    Text("1: Once you have added a friend you will not be able to remove them.")
                         .multilineTextAlignment(.leading)
                         .font(.body)
                     
