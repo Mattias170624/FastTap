@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD107C5027BBB75C00D27A88 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CD107C4E27BBB75C00D27A88 /* DataModel.xcdatamodeld */; };
+		CD107C5227BBB7DB00D27A88 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD107C5127BBB7DB00D27A88 /* DataController.swift */; };
 		CD676D732794570600A93D7F /* FastTapApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D722794570600A93D7F /* FastTapApp.swift */; };
 		CD676D752794570600A93D7F /* Loginscreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D742794570600A93D7F /* Loginscreen.swift */; };
 		CD676D772794570800A93D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD676D762794570800A93D7F /* Assets.xcassets */; };
@@ -14,12 +16,12 @@
 		CD676D842794570800A93D7F /* FastTapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D832794570800A93D7F /* FastTapTests.swift */; };
 		CD676D8E2794570900A93D7F /* FastTapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D8D2794570900A93D7F /* FastTapUITests.swift */; };
 		CD676D902794570900A93D7F /* FastTapUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD676D8F2794570900A93D7F /* FastTapUITestsLaunchTests.swift */; };
-		CD676D9F2794969F00A93D7F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD676D9E2794969F00A93D7F /* GoogleService-Info.plist */; };
 		CD676DA22794987300A93D7F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA12794987300A93D7F /* FirebaseAuth */; };
 		CD676DA42794987300A93D7F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA32794987300A93D7F /* FirebaseDatabase */; };
 		CD676DA62794987300A93D7F /* FirebaseDatabaseSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA52794987300A93D7F /* FirebaseDatabaseSwift-Beta */; };
 		CD676DA82794987300A93D7F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA72794987300A93D7F /* FirebaseFirestore */; };
 		CD676DAA2794987300A93D7F /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = CD676DA92794987300A93D7F /* FirebaseFirestoreSwift-Beta */; };
+		CD94AFC927BBB4C1007156AA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD94AFC827BBB4C1007156AA /* GoogleService-Info.plist */; };
 		CD976A00279AD01E008D64A9 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD9769FF279AD01E008D64A9 /* Database.swift */; };
 		CD976A02279AD122008D64A9 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A01279AD122008D64A9 /* Player.swift */; };
 		CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD976A07279EF5DB008D64A9 /* Homescreen.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CD107C4F27BBB75C00D27A88 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		CD107C5127BBB7DB00D27A88 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CD676D6F2794570600A93D7F /* FastTap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastTap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD676D722794570600A93D7F /* FastTapApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapApp.swift; sourceTree = "<group>"; };
 		CD676D742794570600A93D7F /* Loginscreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loginscreen.swift; sourceTree = "<group>"; };
@@ -61,7 +65,7 @@
 		CD676D892794570900A93D7F /* FastTapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastTapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD676D8D2794570900A93D7F /* FastTapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapUITests.swift; sourceTree = "<group>"; };
 		CD676D8F2794570900A93D7F /* FastTapUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastTapUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		CD676D9E2794969F00A93D7F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CD94AFC827BBB4C1007156AA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CD9769FF279AD01E008D64A9 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		CD976A01279AD122008D64A9 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		CD976A07279EF5DB008D64A9 /* Homescreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Homescreen.swift; sourceTree = "<group>"; };
@@ -131,9 +135,11 @@
 				CD676D722794570600A93D7F /* FastTapApp.swift */,
 				CD9769FB279AC915008D64A9 /* Model */,
 				CD9769FC279AC920008D64A9 /* View */,
-				CD676D9E2794969F00A93D7F /* GoogleService-Info.plist */,
+				CD94AFC827BBB4C1007156AA /* GoogleService-Info.plist */,
 				CD676D762794570800A93D7F /* Assets.xcassets */,
 				CD676D782794570800A93D7F /* Preview Content */,
+				CD107C4E27BBB75C00D27A88 /* DataModel.xcdatamodeld */,
+				CD107C5127BBB7DB00D27A88 /* DataController.swift */,
 			);
 			path = FastTap;
 			sourceTree = "<group>";
@@ -304,8 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD676D7A2794570800A93D7F /* Preview Assets.xcassets in Resources */,
+				CD94AFC927BBB4C1007156AA /* GoogleService-Info.plist in Resources */,
 				CD676D772794570800A93D7F /* Assets.xcassets in Resources */,
-				CD676D9F2794969F00A93D7F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,12 +339,14 @@
 				CD976A02279AD122008D64A9 /* Player.swift in Sources */,
 				CDD03A4A27AC1ADC00404D15 /* Endscreen.swift in Sources */,
 				CDC0091F27B4490500D4928C /* Settingscreen.swift in Sources */,
+				CD107C5027BBB75C00D27A88 /* DataModel.xcdatamodeld in Sources */,
 				CDD03A4627A95DBA00404D15 /* Gamescreen.swift in Sources */,
 				CDD03A4827A9BA2200404D15 /* Game.swift in Sources */,
 				CDC0092127B44E7700D4928C /* Friendscreen.swift in Sources */,
 				CD976A00279AD01E008D64A9 /* Database.swift in Sources */,
 				CD676D752794570600A93D7F /* Loginscreen.swift in Sources */,
 				CDC0092327B44F1800D4928C /* Highscorescreen.swift in Sources */,
+				CD107C5227BBB7DB00D27A88 /* DataController.swift in Sources */,
 				CDAFC57127AED04900E058F3 /* Registerscreen.swift in Sources */,
 				CD676D732794570600A93D7F /* FastTapApp.swift in Sources */,
 				CD976A08279EF5DB008D64A9 /* Homescreen.swift in Sources */,
@@ -728,6 +736,19 @@
 			productName = "FirebaseFirestoreSwift-Beta";
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		CD107C4E27BBB75C00D27A88 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CD107C4F27BBB75C00D27A88 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = CD107C4F27BBB75C00D27A88 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CD676D672794570600A93D7F /* Project object */;
 }

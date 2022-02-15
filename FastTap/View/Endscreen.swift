@@ -11,6 +11,8 @@ import FirebaseAuth
 import FirebaseFirestoreSwift
 
 struct Endscreen: View {
+    @Environment(\.managedObjectContext) var moc
+    
     @State private var backToHomeScreen: Bool = false
     @State private var gameResultText: String = ""
     let firebaseAuth = Auth.auth()
@@ -39,7 +41,11 @@ struct Endscreen: View {
             Spacer()
             
             Button(action: {
-                Database().assignUserData {
+                if Game.practiceMode == false {
+                    Database().assignUserData {
+                        backToHomeScreen.toggle()
+                    }
+                } else {
                     backToHomeScreen.toggle()
                 }
             }, label: {
@@ -57,12 +63,20 @@ struct Endscreen: View {
             Homescreen()
         })
         .onAppear {
-            print("!Practicemode: \(Game.practiceMode.description)")
-            if points > Player.user.score {
-                gameResultText = "You set a new record!"
-                Database().updateDataAndAssignNewData(newData: ["onlineScore" : points])
-            } else {
-                gameResultText = "No new highscore..."
+            switch Game.practiceMode {
+            case true:
+                let int32Score = Int32(points)
+                let newSave = PracticeScore(context: moc)
+                newSave.score = int32Score
+                try? moc.save()
+                
+            case false:
+                if points > Player.user.score {
+                    gameResultText = "You set a new record!"
+                    Database().updateDataAndAssignNewData(newData: ["onlineScore" : points])
+                } else {
+                    gameResultText = "No new highscore..."
+                }
             }
         }
     }

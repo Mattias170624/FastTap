@@ -10,6 +10,8 @@ import Firebase
 import FirebaseAuth
 
 struct Homescreen: View {
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.score, order: .reverse)]) var scores: FetchedResults<PracticeScore>
     
     var body: some View {
         TabView() {
@@ -28,23 +30,11 @@ struct Homescreen: View {
                     .frame(width: 200, height: 100)
                     .background(Color(.systemGroupedBackground))
                     .cornerRadius(10)
+                    .padding(.bottom, 50)
                 
-                Spacer()
-                    .frame(height: 250)
                 
-                HStack {
-                    VStack {
-                        Text("Practice score")
-                            .font(.title3)
-                        Text("0")
-                            .foregroundColor(.green)
-                            .font(.title2)
-                            .bold()
-                    }
-                    .padding()
-                    .background(Color(.systemGroupedBackground))
-                    .cornerRadius(10)
-                    
+                
+                VStack {
                     VStack {
                         Text("Online score")
                             .font(.title3)
@@ -56,7 +46,24 @@ struct Homescreen: View {
                     .padding()
                     .background(Color(.systemGroupedBackground))
                     .cornerRadius(10)
+                    
+                    Spacer()
+                    
+                    VStack {
+                        Text("Practice score")
+                            .font(.title3)
+                        
+                        List(scores) { item in
+                            Text("\(item.score)")
+                        }
+                        .padding()
+                        .frame(width: 300, height: 150)
+                        .cornerRadius(10)
+                    }
+                    
                 }
+                .frame(height: 300)
+                
             }
             .tabItem {
                 Label("Home", systemImage: "house")
