@@ -13,62 +13,102 @@ struct Homescreen: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.score, order: .reverse)]) var scores: FetchedResults<PracticeScore>
     
+    init() {
+        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().backgroundColor = UIColor(Color("ColorBlack"))
+        UITabBar.appearance().unselectedItemTintColor = UIColor(Color("PrimaryColor"))
+    }
+    
     var body: some View {
         TabView() {
-            
             VStack {
-                Text("Fast \n    Tap")
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
+                Spacer()
+                
+                VStack {
+                    Text("Fast")
+                        .fontWeight(.bold)
+                        .font(.system(size: 50))
+                        .foregroundColor(Color("ColorWhite"))
+                    Text("      Tap")
+                        .font(.system(size: 50))
+                        .foregroundColor(Color("PrimaryColor"))
+                }
                 
                 Spacer()
-                    .frame(height: 50)
                 
                 Text("Welcome back!\n\(Player.user.name)")
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .frame(width: 200, height: 100)
-                    .background(Color(.systemGroupedBackground))
+                    .foregroundColor(Color("ColorBlack"))
+                    .background(Color("ColorWhite"))
                     .cornerRadius(10)
                     .padding(.bottom, 50)
                 
+                Spacer()
                 
-                
-                VStack {
+                HStack {
                     VStack {
-                        Text("Online score")
-                            .font(.title3)
-                        Text("\(Player.user.score)")
-                            .foregroundColor(.green)
-                            .font(.title2)
-                            .bold()
-                    }
-                    .padding()
-                    .background(Color(.systemGroupedBackground))
-                    .cornerRadius(10)
-                    
-                    Spacer()
-                    
-                    VStack {
-                        Text("Practice score")
-                            .font(.title3)
                         
-                        List(scores) { item in
-                            Text("\(item.score)")
+                        ZStack {
+                            Text("Multiplayer score")
+                                .foregroundColor(Color("ColorWhite"))
+                                .bold()
+                                .padding()
+                            
                         }
-                        .padding()
-                        .frame(width: 300, height: 150)
+                        .frame(width: 170)
+                        .background(Color("PrimaryColor"))
+                        .cornerRadius(10)
+                        
+                        VStack {
+                            Text("\(Player.user.score)")
+                                .font(.system(size: 40))
+                        }
+                        .frame(width: 170, height: 170)
+                        .background(Color("ColorWhite"))
                         .cornerRadius(10)
                     }
                     
+                    VStack {
+                        
+                        ZStack {
+                            Text("Practice score")
+                                .foregroundColor(Color("ColorWhite"))
+                                .bold()
+                                .padding()
+                            
+                        }
+                        .frame(width: 170)
+                        .background(Color("PrimaryColor"))
+                        .cornerRadius(10)
+                        
+                        VStack {
+                            List {
+                                ForEach(scores) { data in
+                                    Text("\(data.score)")
+                                        .font(.title3)
+                                        .listRowBackground(Color.white)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                            }
+                        }
+                        .frame(width: 170, height: 170)
+                        .cornerRadius(10)
+                    }
                 }
-                .frame(height: 300)
+                
+                Spacer()
                 
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color("ColorBlack"), Color("ColorGray")]), startPoint: .bottom, endPoint: .top)
+            )
             .tabItem {
                 Label("Home", systemImage: "house")
+                    .frame(height: 60)
             }
-            
             
             Highscorescreen()
                 .tabItem {
@@ -90,6 +130,7 @@ struct Homescreen: View {
                     Label("Settings", systemImage: "gearshape")
                 }
         }
+        .accentColor(.red)
     }
 }
 

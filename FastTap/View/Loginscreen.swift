@@ -15,70 +15,111 @@ struct Loginscreen: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var homeScreenShowing: Bool = false
+    @State private var showPassword: Bool = false
     
     var body: some View {
         NavigationView {
             VStack {
-                Text("Fast \n    Tap")
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
+                Spacer()
+
+                VStack {
+                    Text("Fast")
+                        .fontWeight(.bold)
+                        .font(.system(size: 50))
+                        .foregroundColor(Color("ColorWhite"))
+                    Text("      Tap")
+                        .font(.system(size: 50))
+                        .foregroundColor(Color("PrimaryColor"))
+                }
                 
                 Spacer()
-                    .frame(height: 150)
+                    .frame(height: 200)
+        
+                    
                 
                 HStack {
                     Image(systemName: "envelope")
-                        .foregroundColor(.gray)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 22, height: 22)
+                        .foregroundColor(Color("PrimaryColor"))
                     
                     TextField("Email", text: $email)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
+                        .foregroundColor(Color("ColorBlack"))
+                    
+                    
                 }
-                .padding(.horizontal)
-                .frame(width: 300.0, height: 50.0)
-                .overlay(RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray))
-                
-                Spacer()
-                    .frame(height: 10)
+                .padding()
+                .frame(width: 300, height: 50)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("ColorWhite")))
                 
                 HStack {
                     Image(systemName: "lock")
-                        .foregroundColor(.gray)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 22, height: 22)
+                        .foregroundColor(Color("PrimaryColor"))
                     
-                    SecureField("Password", text: $password)
-                        .disableAutocorrection(true)
-                        .textInputAutocapitalization(.never)
+                    if showPassword {
+                        TextField("Password", text: $password)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .foregroundColor(Color("ColorBlack"))
+                    } else {
+                        SecureField("Password", text: $password)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .foregroundColor(Color("ColorBlack"))
+                    }
+                    
+                    Button(action: {
+                        self.showPassword.toggle()
+                    }, label: {
+                        Image(systemName: showPassword ? "eye" : "eye.slash")
+                            .foregroundColor(Color("ColorGray"))
+                    })
+                    
                 }
-                .padding(.horizontal)
-                .frame(width: 300.0, height: 50.0)
-                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray))
+                .padding()
+                .frame(width: 300, height: 50)
+                .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("ColorWhite")))
+                
+                
                 
                 NavigationLink(destination: Registerscreen(), label: {
                     Text("Create an account here")
                 })
                 
+                Spacer()
+                
                 Button(action: {
-                    if email == "" || password == "" {
-                        print("Fill in email and password")
-                    } else {
-                        loginProcess(email: email, password: password) {
-                            print("!Logging in user: \(Player.user.name)")
-                            homeScreenShowing.toggle()
-                        }
+                    loginProcess(email: email, password: password) {
+                        print("!Logging in user: \(Player.user.name)")
+                        homeScreenShowing.toggle()
                     }
-                    
                 }, label: {
                     Text("Login")
-                        .frame(width: 250, height: 50, alignment: .center)
+                        .bold()
+                        .frame(width: 275, height: 60, alignment: .center)
                         .font(.title)
                 })
-                    .buttonStyle(.bordered)
+                    .foregroundColor(Color("ColorWhite"))
+                    .background(Color("PrimaryColor"))
+                    .cornerRadius(10)
                     .padding(.top, 75)
                     .fullScreenCover(isPresented: $homeScreenShowing, content: {
                         Homescreen()
                     })
+                
+               Spacer()
+                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color("AdaptiveGradient1"), Color("AdaptiveGradient2")]), startPoint: .bottom, endPoint: .top)
+            )
         }
         .fullScreenCover(isPresented: $homeScreenShowing, content: {
             Homescreen()
@@ -94,6 +135,8 @@ struct Loginscreen: View {
     }
     
     func loginProcess(email: String, password: String, complete: @escaping() -> Void) {
+        guard email != "" || password != "" else { return }
+        
         Database().loginUserToFirestore(email: email, password: password) {
             Database().assignUserData {
                 complete()
