@@ -11,6 +11,8 @@ import Firebase
 @main
 struct FastTapApp: App {
     
+    @StateObject private var dataController = DataController()
+    
     init() {
         FirebaseApp.configure()
     }
@@ -18,6 +20,7 @@ struct FastTapApp: App {
     var body: some Scene {
         WindowGroup {
             Loginscreen()
+                .environment(\.managedObjectContext, dataController.container.viewContext)
         }
     }
 }
