@@ -12,116 +12,122 @@ import FirebaseAuth
 struct Registerscreen: View {
     @State private var termsOfServiceShowing: Bool = false
     @State private var homeScreenShowing: Bool = false
+    @State private var showPassword: Bool = false
     @State private var nickname: String = ""
     @State private var password: String = ""
     @State private var email: String = ""
     
     var body: some View {
         VStack {
-            Text("Fast \n    Tap")
-                .fontWeight(.bold)
-                .font(.largeTitle)
-                .navigationTitle("Register").navigationBarTitleDisplayMode(.inline)
+            Spacer()
+
+            VStack {
+                Text("Fast")
+                    .fontWeight(.bold)
+                    .font(.system(size: 50))
+                    .foregroundColor(Color("ColorWhite"))
+                Text("      Tap")
+                    .font(.system(size: 50))
+                    .foregroundColor(Color("PrimaryColor"))
+            }
             
             Spacer()
-                .frame(height: 150)
+                .frame(height: 200)
+
             
             HStack {
                 Image(systemName: "person")
-                    .foregroundColor(.gray)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 21, height: 21)
+                    .foregroundColor(Color("PrimaryColor"))
                 
                 TextField("Nickname", text: $nickname)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
+                    .foregroundColor(Color("ColorBlack"))
+                
+                
             }
-            .padding(.horizontal)
-            .frame(width: 300.0, height: 50.0)
-            .overlay(RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray))
-            
-            Spacer()
-                .frame(height: 10)
+            .padding()
+            .frame(width: 300, height: 50)
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("ColorWhite")))
             
             HStack {
                 Image(systemName: "envelope")
-                    .foregroundColor(.gray)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22, height: 22)
+                    .foregroundColor(Color("PrimaryColor"))
                 
                 TextField("Email", text: $email)
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
+                    .foregroundColor(Color("ColorBlack"))
+                
+                
             }
-            .padding(.horizontal)
-            .frame(width: 300.0, height: 50.0)
-            .overlay(RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray))
-            
-            Spacer()
-                .frame(height: 10)
+            .padding()
+            .frame(width: 300, height: 50)
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("ColorWhite")))
             
             HStack {
                 Image(systemName: "lock")
-                    .foregroundColor(.gray)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 22, height: 22)
+                    .foregroundColor(Color("PrimaryColor"))
                 
-                SecureField("Password", text: $password)
-                    .disableAutocorrection(true)
-                    .textInputAutocapitalization(.never)
-            }
-            .padding(.horizontal)
-            .frame(width: 300.0, height: 50.0)
-            .overlay(RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.gray))
-            
-            HStack {
-                Button(action: {
-                    termsOfServiceShowing.toggle()
-                }, label: {
-                    Text("By creating an account you agree \n to the terms & conditions")
-                        .font(.body)
-                        .italic()
-                })
-            }
-            .sheet(isPresented: $termsOfServiceShowing, content: {
-                VStack {
-                    Text("License Agreement")
-                        .font(.title)
-                        .padding(50)
-                    
-                    Spacer()
-                    
-                    Text("1: Once you have added a friend you will not be able to remove them.")
-                        .multilineTextAlignment(.leading)
-                        .font(.body)
-                    
-                    Spacer()
-                    
-                    Button(action: {
-                        termsOfServiceShowing.toggle()
-                    }, label: {
-                        Text("Dismiss")
-                    })
-                        .padding(.bottom, 50)
+                if showPassword {
+                    TextField("Password", text: $password)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+                        .foregroundColor(Color("ColorBlack"))
+                } else {
+                    SecureField("Password", text: $password)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
+                        .foregroundColor(Color("ColorBlack"))
                 }
-            })
+                
+                Button(action: {
+                    self.showPassword.toggle()
+                }, label: {
+                    Image(systemName: showPassword ? "eye" : "eye.slash")
+                        .foregroundColor(Color("ColorGray"))
+                })
+                
+            }
+            .padding()
+            .frame(width: 300, height: 50)
+            .background(RoundedRectangle(cornerRadius: 10, style: .continuous).fill(Color("ColorWhite")))
+            
             
             Button(action: {
-                if nickname == "" || email == "" || password == "" {
-                    print("!Fill in all fields")
-                } else {
-                    registerProcess(email: email, password: password, nickname: nickname) {
-                        homeScreenShowing.toggle()
-                    }
+                registerProcess(email: email, password: password, nickname: nickname) {
+                    homeScreenShowing.toggle()
                 }
             }, label: {
                 Text("Register")
-                    .frame(width: 250, height: 50, alignment: .center)
+                    .bold()
+                    .frame(width: 275, height: 60, alignment: .center)
                     .font(.title)
             })
-                .buttonStyle(.bordered)
+                .foregroundColor(Color("ColorWhite"))
+                .background(Color("PrimaryColor"))
+                .cornerRadius(10)
                 .padding(.top, 75)
                 .fullScreenCover(isPresented: $homeScreenShowing, content: {
                     Homescreen()
                 })
+            
+            Spacer()
+            
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(gradient: Gradient(colors: [Color("ColorBlack"), Color("ColorGray")]), startPoint: .bottom, endPoint: .top)
+        )
     }
     
     func registerProcess(email: String, password: String, nickname: String, complete: @escaping() -> Void) {
