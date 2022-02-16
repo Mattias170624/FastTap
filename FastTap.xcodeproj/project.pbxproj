@@ -182,8 +182,8 @@
 		CD9769FC279AC920008D64A9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CD676D742794570600A93D7F /* Loginscreen.swift */,
 				CDAFC57027AED04900E058F3 /* Registerscreen.swift */,
+				CD676D742794570600A93D7F /* Loginscreen.swift */,
 				CD976A07279EF5DB008D64A9 /* Homescreen.swift */,
 				CDC0091E27B4490500D4928C /* Settingscreen.swift */,
 				CDD03A4527A95DBA00404D15 /* Gamescreen.swift */,
