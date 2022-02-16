@@ -30,6 +30,7 @@ struct Highscorescreen: View {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(Color("PrimaryColor"), lineWidth: 4)
             )
+            .shadow(color: .yellow, radius: 40)
             
             Spacer()
             
@@ -43,7 +44,6 @@ struct Highscorescreen: View {
             .frame(width: 340)
             .background(Color("PrimaryColor"))
             .cornerRadius(10)
-            
             
             List {
                 ForEach(Array(fetchedFriendsList.enumerated()), id: \.1.id) { (index, friend) in
