@@ -21,24 +21,70 @@ struct Endscreen: View {
         VStack {
             Spacer()
             
-            VStack {
-                Text("\(Player.user.name)")
-                
-                Spacer()
-                    .frame(height: 25)
-                Text("\(points)")
-                
-                Spacer()
-                    .frame(height: 25)
+            ZStack {
                 Text("\(gameResultText)")
+                    .bold()
+                    .font(.title3)
+                
             }
-            .frame(width: 200, height: 100, alignment: .center)
-            .padding()
-            .background(Color(.systemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 5))
-            .font(.title3)
+            .frame(width: 340, height: 50)
+            .background(Color("PrimaryColor"))
+            .cornerRadius(10)
+            .foregroundColor(Color("ColorWhite"))
+            
+            HStack {
+                Spacer()
+                
+                VStack {
+                    Text("Score")
+                        .font(.system(size: 20))
+                        .foregroundColor(Color("ColorWhite"))
+                        .padding()
+                    
+                    Text("\(points)")
+                        .font(.system(size: 25))
+                        .foregroundColor(Color("PrimaryColor"))
+                        .bold()
+                    
+                }
+                .frame(width: 100, height: 150)
+                .background(Color("ColorGray"))
+                .cornerRadius(10)
+                
+                Image(systemName: (Player.user.score < points) ? "greaterthan.square.fill" : "lessthan.square.fill")
+                    .font(.system(size: 70))
+                    .foregroundColor(Color("PrimaryColor"))
+                
+                VStack {
+                    VStack {
+                        Text("High")
+                            .font(.system(size: 20))
+                            .foregroundColor(Color("ColorWhite"))
+                        
+                        Text("score")
+                            .font(.system(size: 20))
+                            .foregroundColor(Color("ColorWhite"))
+                    }
+                    .padding(5)
+                    
+                    Text("\(Player.user.score)")
+                        .font(.system(size: 25))
+                        .foregroundColor(Color("PrimaryColor"))
+                        .bold()
+                }
+                .frame(width: 100, height: 150)
+                .background(Color("ColorGray"))
+                .cornerRadius(10)
+                
+                Spacer()
+                
+            }
+            .frame(width: 340, height: 200)
+            .background(Color("ColorWhite"))
+            .cornerRadius(10)
             
             Spacer()
+                .frame(height: 150)
             
             Button(action: {
                 if Game.practiceMode == false {
@@ -50,21 +96,28 @@ struct Endscreen: View {
                 }
             }, label: {
                 Text("Homescreen")
+                    .foregroundColor(Color("ColorWhite"))
+                    .bold()
+                    .font(.title3)
+                    .padding()
             })
-                .padding()
-                .font(.title3)
-                .foregroundColor(.white)
-                .background(Color(.systemGreen))
-                .clipShape(RoundedRectangle(cornerRadius: 5))
-            
+                .frame(maxWidth: 250, alignment: .center)
+                .background(Color("PrimaryColor"))
+                .cornerRadius(10)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(gradient: Gradient(colors: [Color("ColorBlack"), Color("ColorGray")]), startPoint: .bottom, endPoint: .top)
+        )
         .fullScreenCover(isPresented: $backToHomeScreen, content: {
             Homescreen()
         })
         .onAppear {
+            guard Database().auth.currentUser != nil else { return }
+            
             switch Game.practiceMode {
             case true:
+                gameResultText = "You did your best!"
                 let int32Score = Int32(points)
                 let newSave = PracticeScore(context: moc)
                 newSave.score = int32Score

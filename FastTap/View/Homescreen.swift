@@ -33,6 +33,7 @@ struct Homescreen: View {
                         .font(.system(size: 50))
                         .foregroundColor(Color("PrimaryColor"))
                 }
+                .shadow(color: .yellow, radius: 2)
                 
                 Spacer()
                 
