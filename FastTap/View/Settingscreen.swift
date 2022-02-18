@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Settingscreen: View {
     @State private var loginScreenShowing: Bool = false
     @State private var friendsCount: Int = 0
     @State var darkTheme: Bool = false
+    let auth = Auth.auth()
     
     var body: some View {
         VStack {
@@ -51,7 +53,7 @@ struct Settingscreen: View {
                             
                             Text("Email:")
                             Spacer()
-                            Text("\(Player.user.name)")
+                            Text("\(auth.currentUser!.email!)")
                         }
                         
                         HStack {
